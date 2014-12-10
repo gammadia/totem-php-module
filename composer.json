@@ -1,0 +1,10 @@
+{
+    "name": "gammadia/tipi",
+    "type": "library",
+    "description": "PHP Module for Tipi",
+    "autoload": {
+        "psr-4": {
+            "Tipi\\": "lib/"
+        }
+    }
+}
