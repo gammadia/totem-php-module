@@ -6,16 +6,16 @@ use Tipi\Tipi;
 
 class Session {
 	/**
-	 *  Instance du singleton Session.
+	 * Instance du singleton Session.
 	 *
-	 *  @var Tipi\Tipi\Session
+	 * @var static|null
 	 */
 	private static $instance = null;
 
 	/**
-	 *  Lecture de l'instance de Session
+	 * Lecture de l'instance de Session
 	 *
-	 *  @return Tipi\Tipi\Session Instance du singleton
+	 * @return static
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -26,25 +26,25 @@ class Session {
 	}
 
 	/**
-	 *  Constructeur privé. (Singleton)
+	 * Constructeur privé. (Singleton)
 	 */
 	private function __construct() {}
 
 	/**
-	 *  Id de la session courante.
+	 * Id de la session courante.
 	 *
-	 *  @var string
+	 * @var string|null
 	 */
 	private static $sessid = null;
 
 	/**
-	 *  Lecture du header Authorization.
+	 * Lecture du header Authorization.
 	 *
-	 *  PHP en module, header dans getallheaders().
-	 *  PHP en cgi, header dans $_SERVER['HTTP_AUTHORIZATION'].
-	 *  PHP en fcgi, header dans $_SERVER['REDIRECT_HTTP_AUTHORIZATION'].
+	 * PHP en module, header dans getallheaders().
+	 * PHP en cgi, header dans $_SERVER['HTTP_AUTHORIZATION'].
+	 * PHP en fcgi, header dans $_SERVER['REDIRECT_HTTP_AUTHORIZATION'].
 	 *
-	 *  @return string Token d'authentification complet.
+	 * @return string Token d'authentification complet.
 	 */
 	private function getAuthorization() {
 		$auth = '';
@@ -64,11 +64,12 @@ class Session {
 	}
 
 	/**
-	 *  Défini un id de session.
-	 *  Utilisé si l'id est dans la session PHP mais pas dans la requête utilisateur.
+	 * Défini un id de session.
+	 * Utilisé si l'id est dans la session PHP mais pas dans la requête utilisateur.
 	 *
-	 *  @param string $sessid Id de la session
-	 *  @return Tipi\Tipi\Session $this
+	 * @param string $sessid Id de la session
+	 *
+	 * @return static
 	 */
 	public function setId($sessid) {
 		self::$sessid = $sessid;
@@ -77,10 +78,10 @@ class Session {
 	}
 
 	/**
-	 *  Lecture de l'id de session pour la requête courante.
+	 * Lecture de l'id de session pour la requête courante.
 	 *
-	 *  @param boolean $force_read Force la lecture dans le header HTTP
-	 *  @return  string      ID de la session
+	 * @param boolean $force_read Force la lecture dans le header HTTP
+	 * @return string ID de la session
 	 */
 	public function getId($force_read = false) {
 		if ($force_read || self::$sessid === null) {
@@ -101,9 +102,9 @@ class Session {
 	}
 
 	/**
-	 *  Vérifie si la session de l'utilisateur est bien active sur le serveur
+	 * Vérifie si la session de l'utilisateur est bien active sur le serveur
 	 *
-	 *  @return boolean
+	 * @return boolean
 	 */
 	public function isValid() {
 		$result = Tipi::getInstance()->makeRequest('session/ping', 'POST', array(

@@ -6,16 +6,16 @@ class Tipi {
 	const ERR_NO_NAMESPACE = 32;
 
 	/**
-	 *  Instance du singleton Tipi.
+	 * Instance du singleton Tipi.
 	 *
-	 *  @var Tipi\Tipi
+	 * @var static|null
 	 */
 	private static $instance = null;
 
 	/**
-	 *  Lecture de l'instance de Tipi
+	 * Lecture de l'instance de Tipi
 	 *
-	 *  @return Tipi\Tipi Instance du singleton
+	 * @return static
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -26,26 +26,26 @@ class Tipi {
 	}
 
 	/**
-	 *  Version de l'API à utiliser sur le serveur
-	 *  ~2 = 2.*.*
+	 * Version de l'API à utiliser sur le serveur
+	 * ~2 = 2.*.*
 	 *
-	 *  @var string
+	 * @var string
 	 */
 	private static $api_version = '~2';
 
 	/**
-	 *  URL de base de Tipi.
-	 *  Ex: http://tipi.gammadia.ch/
+	 * URL de base de Tipi.
+	 * Ex: http://tipi.gammadia.ch/
 	 *
-	 *  @var string
+	 * @var string|null
 	 */
 	private static $tipi_base_url = null;
 
 	/**
-	 *  Défini l'URL de Tipi.
+	 * Défini l'URL de Tipi.
 	 *
-	 *  @param string $url
-	 *  @see self::$tipi_base_url
+	 * @param string $url
+	 * @see self::$tipi_base_url
 	 */
 	public static function setUrl($url = '') {
 		if (strrchr($url, '/') !== '/') {
@@ -56,66 +56,66 @@ class Tipi {
 	}
 
 	/**
-	 *  Nom de l'application.
+	 * Nom de l'application.
 	 *
-	 *  @var string
+	 * @var string|null
 	 */
 	private static $app_name = null;
 
 	/**
-	 *  Défini le nom de l'application.
+	 * Défini le nom de l'application.
 	 *
-	 *  @param string $name
-	 *  @see self::$app_name
+	 * @param string $name
+	 * @see self::$app_name
 	 */
 	public static function setApplicationName($name = '') {
 		self::$app_name = $name;
 	}
 
 	/**
-	 *  Clef de l'application.
+	 * Clef de l'application.
 	 *
-	 *  @var string
+	 * @var string|null
 	 */
 	private static $app_key = null;
 
 	/**
-	 *  Défini la clef de l'application.
+	 * Défini la clef de l'application.
 	 *
-	 *  @param string $key
-	 *  @see self::$app_key
+	 * @param string $key
+	 * @see self::$app_key
 	 */
 	public static function setApplicationKey($key = '') {
 		self::$app_key = $key;
 	}
 
 	/**
-	 *  Cache des données utilisateur
+	 * Cache des données utilisateur
 	 *
-	 *  @var array
+	 * @var array
 	 */
 	private static $cache = array();
 
 	/**
-	 *  Constructeur privé. (Singleton)
+	 * Constructeur privé. (Singleton)
 	 */
 	private function __construct() {}
 
 	/**
-	 *  Générateur Otp
+	 * Générateur Otp
 	 *
-	 *  @var Tipi\Tipi\Otp
+	 * @var \Tipi\Tipi\Otp|null
 	 */
 	private $generator = null;
 
 	/**
-	 *  Requête sur la base Tipi
+	 * Requête sur la base Tipi
 	 *
-	 *  @param   string $resource Resource (url)
-	 *  @param   string $type     GET || POST
-	 *  @param   array  $data     Données pour les requêtes POST
+	 * @param string $resource Resource (url)
+	 * @param string $type GET || POST
+	 * @param array $data Données pour les requêtes POST
 	 *
-	 *  @return  array           Données reçues
+	 * @return mixed Données reçues
 	 */
 	public function makeRequest($resource, $type = 'GET', $data = array()) {
 		$ch = curl_init(self::$tipi_base_url . $resource);
@@ -144,10 +144,10 @@ class Tipi {
 	}
 
 	/**
-	 *  Création du token http authentication pour Tipi
-	 *  TIPI-TOKEN appid="xxx", sign="xxx"
+	 * Création du token http authentication pour Tipi
+	 * TIPI-TOKEN appid="xxx", sign="xxx"
 	 *
-	 *  @return string Token
+	 * @return string
 	 */
 	private function getToken() {
 		if (!$this->generator) {
@@ -165,21 +165,21 @@ class Tipi {
 	}
 
 	/**
-	 *  Création du header d'authentification
+	 * Création du header d'authentification
 	 *
-	 *  @returns [type] [description]
+	 * @return string
 	 */
 	public function getAuthHeader() {
 		return 'Authorization: ' . $this->getToken();
 	}
 
 	/**
-	 *  Lecture des données de l'utilisateur actuel pour le namespace donné.
+	 * Lecture des données de l'utilisateur actuel pour le namespace donné.
 	 *
-	 *  @param   string  $namespace
-	 *  @param   boolean $force_refresh Forcer le rechargement des données, ne pas lire le cache.
+	 * @param string $namespace
+	 * @param boolean $force_refresh Forcer le rechargement des données, ne pas lire le cache.
 	 *
-	 *  @return  array            Données utilisateur
+	 * @return array Données utilisateur
 	 */
 	public function getUserData($namespace, $force_refresh = false) {
 		if (empty($namespace)) {
@@ -212,20 +212,20 @@ class Tipi {
 	}
 
 	/**
-	 *  Écriture des données de l'utilisateur actuel dans le namespace donné
+	 * Écriture des données de l'utilisateur actuel dans le namespace donné
 	 *
-	 *  /!\ Attention /!\
-	 *  Écrase les données.
-	 *  Faire un getUserData('xxx', true) avant, modifier les données, et setUserData().
-	 *  Le $force_refresh de getUserData() est aussi fortement conseillé, pour éviter les données non à jour.
+	 * /!\ Attention /!\
+	 * Écrase les données.
+	 * Faire un getUserData('xxx', true) avant, modifier les données, et setUserData().
+	 * Le $force_refresh de getUserData() est aussi fortement conseillé, pour éviter les données non à jour.
 	 *
-	 *  setUserData('xxx', array(), string), va vider le namespace 'xxx'.
+	 * setUserData('xxx', array(), string), va vider le namespace 'xxx'.
 	 *
-	 *  @param string $namespace
-	 *  @param array  $data      Données, le contenu du namespace complet sera remplacé.
-     *  @param string $tipiId Tipi id of the user
+	 * @param string $namespace
+	 * @param array $data Données, le contenu du namespace complet sera remplacé.
+	 * @param string $tipiId Tipi id of the user
 	 *
-	 *  @return  array          Résultat
+	 * @return array
 	 */
 	public function setUserData($namespace, $data, $tipiId = null) {
 		$session = Tipi\Session::getInstance();
@@ -237,7 +237,7 @@ class Tipi {
 			);
 		}
 
-        $path = isset($tipiId) ? 'session/' . $tipiId . '/' . $namespace : 'session/' . $session->getId() . '/' . $namespace;
+		$path = isset($tipiId) ? 'session/' . $tipiId . '/' . $namespace : 'session/' . $session->getId() . '/' . $namespace;
 
 		$result = $this->makeRequest($path,
 			'PUT',

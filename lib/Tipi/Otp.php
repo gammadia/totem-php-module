@@ -2,34 +2,35 @@
 
 namespace Tipi\Tipi;
 
+/**
+ * @property false|string $secret
+ */
 class Otp {
 	/**
-	 *  Taille, en bit, du passe à générer.
+	 * Taille, en bit, du passe à générer.
 	 *
-	 *  @type {Number}
+	 * @var int
 	 */
 	private static $key_size = 96;
 
 	/**
-	 *  Base du dernier hash généré.
+	 * Base du dernier hash généré.
 	 *
-	 *  @type {Number}
+	 * @var float|null
 	 */
 	private $last_time = null;
 
 	/**
-	 *  Dernier code retourné.
+	 * Dernier code retourné.
 	 *
-	 *  @type {String}
+	 * @var string|null
 	 */
 	private $last_hash = null;
 
 	/**
-	 *  Création d'un générateur OTP
+	 * Création d'un générateur OTP
 	 *
-	 *  @param   string secret Clef privée, String en base64
-	 *
-	 *  @return Tipi\Tipi\Otp        Générateur OTP
+	 * @param string $secret Clef privée, String en base64
 	 */
 	public function __construct($secret) {
 		if (is_string($secret)) {
@@ -40,9 +41,9 @@ class Otp {
 	}
 
 	/**
-	 *  Création du code et encodage en base64
+	 * Création du code et encodage en base64
 	 *
-	 *  @return string   Code en base64
+	 * @return string Code en base64
 	 */
 	public function getCode() {
 		$time = floor(time() / 30);   //  Unix timestamp / 30
