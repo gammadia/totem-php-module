@@ -1,8 +1,8 @@
 <?php
 
-namespace Tipi\Tipi;
+namespace Totem\Totem;
 
-use Tipi\Tipi;
+use Totem\Totem;
 
 class Session {
     /**
@@ -107,7 +107,7 @@ class Session {
      * @return boolean
      */
     public function isValid() {
-        $result = Tipi::getInstance()->makeRequest('session/ping', 'POST', array(
+        $result = Totem::getInstance()->makeRequest('session/ping', 'POST', array(
             'sess_id' => $this->getId(),
             'timestamp' => time()
         ));
