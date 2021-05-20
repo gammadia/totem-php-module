@@ -1,10 +1,10 @@
 {
-    "name": "gammadia/tipi",
+    "name": "gammadia/totem",
     "type": "library",
-    "description": "PHP Module for Tipi",
+    "description": "PHP Module for Totem",
     "autoload": {
         "psr-4": {
-            "Tipi\\": "lib/"
+            "Totem\\": "lib/"
         }
     }
 }

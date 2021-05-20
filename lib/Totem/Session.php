@@ -1,21 +1,21 @@
 <?php
 
-namespace Tipi\Tipi;
+namespace Totem\Totem;
 
-use Tipi\Tipi;
+use Totem\Totem;
 
 class Session {
 	/**
 	 *  Instance du singleton Session.
 	 *
-	 *  @var Tipi\Tipi\Session
+	 *  @var Totem\Totem\Session
 	 */
 	private static $instance = null;
 
 	/**
 	 *  Lecture de l'instance de Session
 	 *
-	 *  @return Tipi\Tipi\Session Instance du singleton
+	 *  @return Totem\Totem\Session Instance du singleton
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -68,7 +68,7 @@ class Session {
 	 *  Utilisé si l'id est dans la session PHP mais pas dans la requête utilisateur.
 	 *
 	 *  @param string $sessid Id de la session
-	 *  @return Tipi\Tipi\Session $this
+	 *  @return Totem\Totem\Session $this
 	 */
 	public function setId($sessid) {
 		self::$sessid = $sessid;
@@ -106,7 +106,7 @@ class Session {
 	 *  @return boolean
 	 */
 	public function isValid() {
-		$result = Tipi::getInstance()->makeRequest('session/ping', 'POST', array(
+		$result = Totem::getInstance()->makeRequest('session/ping', 'POST', array(
 			'sess_id' => $this->getId(),
 			'timestamp' => time()
 		));

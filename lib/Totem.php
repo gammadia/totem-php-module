@@ -1,21 +1,21 @@
 <?php
 
-namespace Tipi;
+namespace Totem;
 
-class Tipi {
+class Totem {
 	const ERR_NO_NAMESPACE = 32;
 
 	/**
-	 *  Instance du singleton Tipi.
+	 *  Instance du singleton Totem.
 	 *
-	 *  @var Tipi\Tipi
+	 *  @var Totem\Totem
 	 */
 	private static $instance = null;
 
 	/**
-	 *  Lecture de l'instance de Tipi
+	 *  Lecture de l'instance de Totem
 	 *
-	 *  @return Tipi\Tipi Instance du singleton
+	 *  @return Totem\Totem Instance du singleton
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -34,25 +34,25 @@ class Tipi {
 	private static $api_version = '~2';
 
 	/**
-	 *  URL de base de Tipi.
-	 *  Ex: http://tipi.gammadia.ch/
+	 *  URL de base de Totem.
+	 *  Ex: http://Totem.gammadia.ch/
 	 *
 	 *  @var string
 	 */
-	private static $tipi_base_url = null;
+	private static $totem_base_url = null;
 
 	/**
-	 *  Défini l'URL de Tipi.
+	 *  Défini l'URL de Totem.
 	 *
 	 *  @param string $url
-	 *  @see self::$tipi_base_url
+	 *  @see self::$totem_base_url
 	 */
 	public static function setUrl($url = '') {
 		if (strrchr($url, '/') !== '/') {
 			$url .= '/';
 		}
 
-		self::$tipi_base_url = $url;
+		self::$totem_base_url = $url;
 	}
 
 	/**
@@ -104,12 +104,12 @@ class Tipi {
 	/**
 	 *  Générateur Otp
 	 *
-	 *  @var Tipi\Tipi\Otp
+	 *  @var Totem\Totem\Otp
 	 */
 	private $generator = null;
 
 	/**
-	 *  Requête sur la base Tipi
+	 *  Requête sur la base Totem
 	 *
 	 *  @param   string $resource Resource (url)
 	 *  @param   string $type     GET || POST
@@ -118,7 +118,7 @@ class Tipi {
 	 *  @return  array           Données reçues
 	 */
 	public function makeRequest($resource, $type = 'GET', $data = array()) {
-		$ch = curl_init(self::$tipi_base_url . $resource);
+		$ch = curl_init(self::$totem_base_url . $resource);
 
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
@@ -144,14 +144,14 @@ class Tipi {
 	}
 
 	/**
-	 *  Création du token http authentication pour Tipi
+	 *  Création du token http authentication pour Totem
 	 *  TIPI-TOKEN appid="xxx", sign="xxx"
 	 *
 	 *  @return string Token
 	 */
 	private function getToken() {
 		if (!$this->generator) {
-			$this->generator = new Tipi\Otp(self::$app_key);
+			$this->generator = new Totem\Otp(self::$app_key);
 		}
 
 		$sign = $hash = hash_hmac('sha256', self::$app_key, $this->generator->getCode());
@@ -189,7 +189,7 @@ class Tipi {
 			);
 		}
 
-		$session = Tipi\Session::getInstance();
+		$session = Totem\Session::getInstance();
 
 		if (!$session->isValid()) {
 			return array(
@@ -223,12 +223,12 @@ class Tipi {
 	 *
 	 *  @param string $namespace
 	 *  @param array  $data      Données, le contenu du namespace complet sera remplacé.
-     *  @param string $tipiId Tipi id of the user
+     *  @param string $totemId Totem id of the user
 	 *
 	 *  @return  array          Résultat
 	 */
-	public function setUserData($namespace, $data, $tipiId = null) {
-		$session = Tipi\Session::getInstance();
+	public function setUserData($namespace, $data, $totemId = null) {
+		$session = Totem\Session::getInstance();
 
 		if (!$session->isValid()) {
 			return array(
@@ -237,7 +237,7 @@ class Tipi {
 			);
 		}
 
-        $path = isset($tipiId) ? 'session/' . $tipiId . '/' . $namespace : 'session/' . $session->getId() . '/' . $namespace;
+        $path = isset($totemId) ? 'session/' . $totemId . '/' . $namespace : 'session/' . $session->getId() . '/' . $namespace;
 
 		$result = $this->makeRequest($path,
 			'PUT',
