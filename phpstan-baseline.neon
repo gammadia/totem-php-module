@@ -1,22 +1,22 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$handle of function curl_close expects CurlHandle, CurlHandle\\|false given\\.$#"
+			message: "#^Parameter \\#1 \\$ch of function curl_close expects resource, resource\\|false given\\.$#"
 			count: 1
 			path: lib/Tipi.php
 
 		-
-			message: "#^Parameter \\#1 \\$handle of function curl_exec expects CurlHandle, CurlHandle\\|false given\\.$#"
+			message: "#^Parameter \\#1 \\$ch of function curl_exec expects resource, resource\\|false given\\.$#"
 			count: 1
 			path: lib/Tipi.php
 
 		-
-			message: "#^Parameter \\#1 \\$handle of function curl_setopt expects CurlHandle, CurlHandle\\|false given\\.$#"
+			message: "#^Parameter \\#1 \\$ch of function curl_setopt expects resource, resource\\|false given\\.$#"
 			count: 6
 			path: lib/Tipi.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function base64_encode expects string, string\\|false given\\.$#"
+			message: "#^Parameter \\#1 \\$str of function base64_encode expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Tipi.php
 
@@ -26,12 +26,12 @@ parameters:
 			path: lib/Tipi.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function base64_encode expects string, string\\|false given\\.$#"
+			message: "#^Parameter \\#1 \\$data of function hex2bin expects string, string\\|null given\\.$#"
 			count: 1
 			path: lib/Tipi/Otp.php
 
 		-
-			message: "#^Parameter \\#1 \\$string of function hex2bin expects string, string\\|null given\\.$#"
+			message: "#^Parameter \\#1 \\$str of function base64_encode expects string, string\\|false given\\.$#"
 			count: 1
 			path: lib/Tipi/Otp.php
 

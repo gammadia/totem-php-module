@@ -7,7 +7,6 @@ parameters:
     tmpDir: 'var/cache/phpstan'
     paths:
         - 'lib'
-    phpVersion: 80007
     reportUnmatchedIgnoredErrors: true
     checkFunctionNameCase: true
     checkUninitializedProperties: true
