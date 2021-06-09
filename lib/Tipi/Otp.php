@@ -47,10 +47,9 @@ class Otp {
      */
     public function getCode() {
         $time = floor(time() / 30);   //  Unix timestamp / 30
-        $hash = null;
 
         if ($this->last_time !== $time) {
-            $hash = hash_hmac('sha512', $time, $this->secret);
+            $hash = (string) hash_hmac('sha512', (string) $time, (string) $this->secret);
 
             //  Garde seulement les [key_size] bits les moins significatifs
             $hash = substr($hash, strlen($hash) - (self::$key_size / 4));
@@ -58,9 +57,9 @@ class Otp {
             $this->last_time = $time;
             $this->last_hash = $hash;
         } else {
-            $hash = $this->last_hash;
+            $hash = (string) $this->last_hash;
         }
 
-        return base64_encode(hex2bin($hash));
+        return base64_encode((string) hex2bin($hash));
     }
 }

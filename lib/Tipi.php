@@ -126,6 +126,10 @@ class Tipi {
     public function makeRequest($resource, $type = 'GET', $data = array()) {
         $ch = curl_init(self::$tipi_base_url . $resource);
 
+        if (!$ch) {
+            throw new \UnexpectedValueException('Unable to init cURL handler.');
+        }
+
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
             $this->getAuthHeader(),
@@ -160,8 +164,8 @@ class Tipi {
             $this->generator = new Tipi\Otp(self::$app_key);
         }
 
-        $sign = $hash = hash_hmac('sha256', self::$app_key, $this->generator->getCode());
-        $sign = base64_encode(hex2bin($sign));
+        $sign = hash_hmac('sha256', (string) self::$app_key, $this->generator->getCode());
+        $sign = base64_encode((string) hex2bin($sign));
 
         $token = 'TIPI-TOKEN ' .
                 'app="' . self::$app_name . '", ' .
