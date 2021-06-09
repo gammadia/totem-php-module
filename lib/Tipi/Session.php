@@ -8,14 +8,14 @@ class Session {
 	/**
 	 * Instance du singleton Session.
 	 *
-	 * @var static|null
+	 * @var self|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Lecture de l'instance de Session
 	 *
-	 * @return static
+	 * @return self
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -81,7 +81,7 @@ class Session {
 	 * Lecture de l'id de session pour la requête courante.
 	 *
 	 * @param boolean $force_read Force la lecture dans le header HTTP
-	 * @return string ID de la session
+	 * @return string|null ID de la session
 	 */
 	public function getId($force_read = false) {
 		if ($force_read || self::$sessid === null) {

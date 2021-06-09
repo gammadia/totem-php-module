@@ -8,14 +8,14 @@ class Tipi {
 	/**
 	 * Instance du singleton Tipi.
 	 *
-	 * @var static|null
+	 * @var self|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Lecture de l'instance de Tipi
 	 *
-	 * @return static
+	 * @return self
 	 */
 	public static function getInstance() {
 		if (self::$instance === null) {
@@ -46,6 +46,8 @@ class Tipi {
 	 *
 	 * @param string $url
 	 * @see self::$tipi_base_url
+	 *
+	 * @return void
 	 */
 	public static function setUrl($url = '') {
 		if (strrchr($url, '/') !== '/') {
@@ -67,6 +69,8 @@ class Tipi {
 	 *
 	 * @param string $name
 	 * @see self::$app_name
+	 *
+	 * @return void
 	 */
 	public static function setApplicationName($name = '') {
 		self::$app_name = $name;
@@ -84,6 +88,8 @@ class Tipi {
 	 *
 	 * @param string $key
 	 * @see self::$app_key
+	 *
+	 * @return void
 	 */
 	public static function setApplicationKey($key = '') {
 		self::$app_key = $key;
@@ -92,7 +98,7 @@ class Tipi {
 	/**
 	 * Cache des données utilisateur
 	 *
-	 * @var array
+	 * @var array<string, mixed[]>
 	 */
 	private static $cache = array();
 
@@ -113,7 +119,7 @@ class Tipi {
 	 *
 	 * @param string $resource Resource (url)
 	 * @param string $type GET || POST
-	 * @param array $data Données pour les requêtes POST
+	 * @param mixed[] $data Données pour les requêtes POST
 	 *
 	 * @return mixed Données reçues
 	 */
@@ -179,7 +185,7 @@ class Tipi {
 	 * @param string $namespace
 	 * @param boolean $force_refresh Forcer le rechargement des données, ne pas lire le cache.
 	 *
-	 * @return array Données utilisateur
+	 * @return array{success: bool, reason?: string, data?: mixed[]}
 	 */
 	public function getUserData($namespace, $force_refresh = false) {
 		if (empty($namespace)) {
@@ -222,10 +228,10 @@ class Tipi {
 	 * setUserData('xxx', array(), string), va vider le namespace 'xxx'.
 	 *
 	 * @param string $namespace
-	 * @param array $data Données, le contenu du namespace complet sera remplacé.
+	 * @param mixed[] $data Données, le contenu du namespace complet sera remplacé.
 	 * @param string $tipiId Tipi id of the user
 	 *
-	 * @return array
+	 * @return array{success: bool, reason?: string, data?: mixed[]}
 	 */
 	public function setUserData($namespace, $data, $tipiId = null) {
 		$session = Tipi\Session::getInstance();

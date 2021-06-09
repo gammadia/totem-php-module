@@ -3,7 +3,7 @@
 namespace Tipi\Tipi;
 
 /**
- * @property false|string $secret
+ * @property false|string|null $secret
  */
 class Otp {
 	/**
@@ -30,7 +30,7 @@ class Otp {
 	/**
 	 * Création d'un générateur OTP
 	 *
-	 * @param string $secret Clef privée, String en base64
+	 * @param string|null $secret Clef privée, String en base64
 	 */
 	public function __construct($secret) {
 		if (is_string($secret)) {
