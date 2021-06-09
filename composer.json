@@ -1,8 +1,8 @@
 {
-    "name": "gammadia/tipi",
+    "name": "gammadia/totem-php-module",
     "type": "library",
     "license": "proprietary",
-    "description": "PHP Module for Tipi",
+    "description": "PHP Module for Totem",
     "autoload": {
         "psr-4": {
             "Tipi\\": "lib/"
