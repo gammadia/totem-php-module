@@ -1,6 +1,6 @@
 <?php
 
-namespace Tipi\Tipi;
+namespace Totem\Totem;
 
 /**
  * @property false|string|null $secret
