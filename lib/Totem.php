@@ -124,6 +124,10 @@ class Totem {
      * @return mixed Données reçues
      */
     public function makeRequest($resource, $type = 'GET', $data = array()) {
+        if (null === self::$totem_base_url) {
+            throw new \UnexpectedValueException(sprintf('You must call %s::setUrl() before using Totem.', self::class));
+        }
+
         $ch = curl_init(self::$totem_base_url . $resource);
 
         if (!$ch) {
