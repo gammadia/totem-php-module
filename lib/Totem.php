@@ -128,7 +128,7 @@ class Totem {
             throw new \UnexpectedValueException(sprintf('You must call %s::setUrl() before using Totem.', self::class));
         }
 
-        $ch = curl_init(self::$totem_base_url . $resource);
+        $ch = curl_init(rtrim(self::$totem_base_url, '/') . '/' . ltrim($resource, '/'));
 
         if (!$ch) {
             throw new \UnexpectedValueException('Unable to init cURL handler.');
